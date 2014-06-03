@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Hooks in to the views API to add the google_appliance_onebox type and theme.
+ */
+
+/**
+ * Implements hook_init().
+ */
+function google_appliance_onebox_init() {
+  // We have to include our theme preprocessors here until:
+  // http://drupal.org/node/1096770 is fixed.
+  require_once drupal_get_path('module', 'google_appliance_onebox') . '/theme/google_appliance_onebox.theme.inc';
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function google_appliance_onebox_views_api() {
+  return array(
+    'api' => 3,
+  );
+}
+
+/**
+ * Implements hook_query_alter().
+ *
+ * This hook is called to ensure that the feed will receive a nid.
+ * If no nid field is included in the feed then the feed will
+ * be unable to link to the node properly.
+ */
+function google_appliance_onebox_query_alter(QueryAlterableInterface $query) {
+  $tables = $query->getTables();
+  $has_node = FALSE;
+  foreach ($tables as $key => $table) {
+    if ($key == 'node') {
+      $has_node = TRUE;
+    }
+    elseif (is_object($table) && $table->table == 'node') {
+      $has_node = TRUE;
+    }
+  }
+  $fields = $query->getFields();
+  if (!in_array('nid', $fields) && !in_array('node_nid', $fields) && $has_node) {
+    $query->addField('node', 'nid');
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function google_appliance_onebox_theme() {
+  // Make sure that views picks up the preprocess functions.
+  module_load_include('inc', 'google_appliance_onebox', 'theme/google_appliance_onebox.theme');
+  $hooks = array();
+  $hooks['google_appliance_onebox_feed_icon'] = array(
+    'pattern' => 'google_appliance_onebox_feed_icon__',
+    'variables' => array(
+      'image_path' => NULL,
+      'url' => NULL,
+      'query' => '',
+      'text' => '',
+    ),
+    'file' => 'theme/google_appliance_onebox.theme.inc',
+  );
+
+  $hooks['google_appliance_onebox_complete_page'] = array(
+    'variables' => array(
+      'file' => '',
+      'errors' => array(),
+      'return_url' => '',
+    ),
+    'file' => 'theme/google_appliance_onebox.theme.inc',
+  );
+
+  $hooks['google_appliance_onebox_message'] = array(
+    'variables' => array(
+      'message' => '',
+      'type' => 'info',
+    ),
+    'file' => 'theme/google_appliance_onebox.theme.inc',
+  );
+
+  return $hooks;
+}
