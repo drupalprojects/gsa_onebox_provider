@@ -39,7 +39,7 @@ function google_appliance_onebox_views_plugins() {
       ),
     ),
     'style' => array(
-      'googel_appliance_onebox' => array(
+      'google_appliance_onebox' => array(
         // This isn't really a display but is necessary so the file can
         // be included.
         'no ui' => TRUE,
