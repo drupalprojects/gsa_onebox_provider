@@ -6,7 +6,7 @@
  */
 
 // TODO rename gsa_onebox_provider
-// TODO dependency on views_php + plugin for $_GET ?
+// TODO README / project page describe substitutions
 
 /**
  * Implements hook_init().
@@ -90,9 +90,12 @@ function google_appliance_onebox_theme() {
 
 /**
  * Implements hook_views_query_substitutions().
+ *
+ * Define GSA replacements - especially ***GSA_QUERY***.
  */
 function google_appliance_onebox_views_query_substitutions($view) {
-  $rcv_params = drupal_get_query_parameters();
+  $replacements = array();
+  $qry_params = drupal_get_query_parameters();
   $gsa_params = array(
     'apiMaj',
     'apiMin',
@@ -104,10 +107,8 @@ function google_appliance_onebox_views_query_substitutions($view) {
     'p0',
     'authType',
   );
-  $replacements = array();
   foreach ($gsa_params as $param) {
-    $replacements["[gsa:$param]"] = isset($rcv_params[$param]) ? $rcv_params[$param] : '';
+    $replacements['***GSA\\_' . drupal_strtoupper($param) . '***'] = isset($qry_params[$param]) ? $qry_params[$param] : '';
   }
-  // TODO if view type is gsa
   return $replacements;
 }
