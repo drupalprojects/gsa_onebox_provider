@@ -9,7 +9,7 @@
  *
  * @ingroup views_style_plugins
  */
-class GoogleApplianceOneboxPluginStyleXml extends GoogleApplianceOneboxPluginStyle {
+class GSAOneboxProviderPluginStyleXml extends GSAOneboxProviderPluginStyle {
 
   /**
    * Set options fields and default values.

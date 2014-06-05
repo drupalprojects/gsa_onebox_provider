@@ -10,13 +10,13 @@
  *
  * @ingroup views_display_plugins
  */
-class GoogleApplianceOneboxPluginDisplay extends views_plugin_display_feed {
+class GSAOneboxProviderPluginDisplay extends views_plugin_display_feed {
 
   /**
    * Return the type of styles we require.
    */
   public function get_style_type() {
-    return 'google_appliance_onebox';
+    return 'gsa_onebox_provider';
   }
 
   /**
@@ -37,7 +37,7 @@ class GoogleApplianceOneboxPluginDisplay extends views_plugin_display_feed {
   public function option_definition() {
     $options = parent::option_definition();
     $options['items_per_page'] = array('default' => '0');
-    $options['style_plugin']['default'] = 'google_appliance_onebox_xml';
+    $options['style_plugin']['default'] = 'gsa_onebox_provider_xml';
 
     if (isset($options['defaults']['default']['items_per_page'])) {
       $options['defaults']['default']['items_per_page'] = FALSE;

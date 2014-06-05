@@ -8,7 +8,7 @@
  *
  * @ingroup views_style_plugins
  */
-class GoogleApplianceOneboxPluginStyle extends views_plugin_style {
+class GSAOneboxProviderPluginStyle extends views_plugin_style {
 
   /**
    * Render the display in this style.

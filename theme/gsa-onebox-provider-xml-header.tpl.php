@@ -15,7 +15,7 @@ print '<?xml version="1.0" encoding="UTF-8" ?>';
 //TODO use *display* title instead of view title -> should be in $title
 //TODO remove datasource and feedtype (defined somewhere else in the module)
 //TODO set <IMAGE_SOURCE>, <title> etc. See onebox doc reference.
-//dpm($view->display['google_appliance_onebox_1']);
+//dpm($view->display['gsa_onebox_provider_1']);
 //dpm($view);
 ?>
 <OneBoxResults>

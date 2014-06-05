@@ -11,7 +11,7 @@
 /**
  * Theme a status message.
  */
-function theme_google_appliance_onebox_message($var) {
+function theme_gsa_onebox_provider_message($var) {
   $output = '';
   $output .= '<div class="messages status ' . $var['type'] . '">';
   $output .= $var['message'];
@@ -28,7 +28,7 @@ function theme_google_appliance_onebox_message($var) {
  * 
  * @ingroup themeable
  */
-function theme_google_appliance_onebox_feed_icon($variables) {
+function theme_gsa_onebox_provider_feed_icon($variables) {
   extract($variables, EXTR_SKIP);
   $url_options = array('html' => TRUE);
   if ($query) {
@@ -42,7 +42,7 @@ function theme_google_appliance_onebox_feed_icon($variables) {
 /**
  * Template preprocess function.
  */
-function template_preprocess_google_appliance_onebox(&$vars) {
+function template_preprocess_gsa_onebox_provider(&$vars) {
   $vars['header'] = $vars['rows']['header'];
   $vars['body'] = $vars['rows']['body'];
   $vars['footer'] = $vars['rows']['footer'];
@@ -54,21 +54,21 @@ function template_preprocess_google_appliance_onebox(&$vars) {
 /**
  * Preprocess txt output template.
  */
-function template_preprocess_google_appliance_onebox_txt_body(&$vars) {
-  _google_appliance_onebox_header_shared_preprocess($vars);
-  _google_appliance_onebox_body_shared_preprocess($vars);
+function template_preprocess_gsa_onebox_provider_txt_body(&$vars) {
+  _gsa_onebox_provider_header_shared_preprocess($vars);
+  _gsa_onebox_provider_body_shared_preprocess($vars);
 }
 
 /**
  * Preprocess xml output template.
  */
-function template_preprocess_google_appliance_onebox_xml_header(&$vars) {
+function template_preprocess_gsa_onebox_provider_xml_header(&$vars) {
   // Compute the root XML node, using the base table, and appending an 's'.
   $root_node = $vars['view']->base_table;
   if (rtrim($root_node, 's') == $root_node) {
     $root_node .= 's';
   }
-  $vars['root_node'] = _google_appliance_onebox_xml_tag_clean($root_node);
+  $vars['root_node'] = _gsa_onebox_provider_xml_tag_clean($root_node);
 
   if ($vars['options']['datasource']) {
     $vars['datasource'] = $vars['options']['datasource'];
@@ -87,24 +87,24 @@ function template_preprocess_google_appliance_onebox_xml_header(&$vars) {
 /**
  * Preprocess xml output template.
  */
-function template_preprocess_google_appliance_onebox_xml_footer(&$vars) {
+function template_preprocess_gsa_onebox_provider_xml_footer(&$vars) {
   // Compute the root XML node, using the base table, and appending an 's'.
   $root_node = $vars['view']->base_table;
   if (rtrim($root_node, 's') == $root_node) {
     $root_node .= 's';
   }
-  $vars['root_node'] = _google_appliance_onebox_xml_tag_clean($root_node);
+  $vars['root_node'] = _gsa_onebox_provider_xml_tag_clean($root_node);
 }
 
 /**
  * Preprocess xml output template.
  */
-function template_preprocess_google_appliance_onebox_xml_body(&$vars) {
-  _google_appliance_onebox_header_shared_preprocess($vars);
-  _google_appliance_onebox_body_shared_preprocess($vars);
+function template_preprocess_gsa_onebox_provider_xml_body(&$vars) {
+  _gsa_onebox_provider_header_shared_preprocess($vars);
+  _gsa_onebox_provider_body_shared_preprocess($vars);
 
   // Compute the tag name based on the views base table, minus any trailing 's'.
-  $vars['item_node'] = _google_appliance_onebox_xml_tag_clean(rtrim($vars['view']->base_table, 's'));
+  $vars['item_node'] = _gsa_onebox_provider_xml_tag_clean(rtrim($vars['view']->base_table, 's'));
 
   $options = array();
   $options['absolute'] = TRUE;
@@ -129,7 +129,7 @@ function template_preprocess_google_appliance_onebox_xml_body(&$vars) {
       $vars['themed_rows'][$num][$field] = $content;
     }
   }
-  drupal_alter('google_appliance_onebox_url_content', $vars['record_url'], $vars);
+  drupal_alter('gsa_onebox_provider_url_content', $vars['record_url'], $vars);
 
   foreach ($vars['header'] as $field => $header) {
     // If there is no field label, use 'no name'.
@@ -157,7 +157,7 @@ function template_preprocess_google_appliance_onebox_xml_body(&$vars) {
       }
     }
     // We should always try to output valid XML.
-    $vars['xml_tag'][$field] = _google_appliance_onebox_xml_tag_clean($vars['xml_tag'][$field]);
+    $vars['xml_tag'][$field] = _gsa_onebox_provider_xml_tag_clean($vars['xml_tag'][$field]);
   }
 }
 
@@ -171,7 +171,7 @@ function template_preprocess_google_appliance_onebox_xml_body(&$vars) {
  *   The valid XML tag or an empty string if the string contained no valid
  * XML tag characters.
  */
-function _google_appliance_onebox_xml_tag_clean($tag) {
+function _gsa_onebox_provider_xml_tag_clean($tag) {
 
   // This regex matches characters that are not valid in XML tags, and the
   // unicode ones that are. We don't bother with unicode, because it would so
@@ -193,7 +193,7 @@ function _google_appliance_onebox_xml_tag_clean($tag) {
 /**
  * Shared helper function for preprocess functions.
  */
-function _google_appliance_onebox_header_shared_preprocess(&$vars) {
+function _gsa_onebox_provider_header_shared_preprocess(&$vars) {
   $view   = $vars['view'];
   $fields = &$view->field;
 
@@ -209,7 +209,7 @@ function _google_appliance_onebox_header_shared_preprocess(&$vars) {
 /**
  * Shared helper function for preprocess functions.
  */
-function _google_appliance_onebox_body_shared_preprocess(&$vars) {
+function _gsa_onebox_provider_body_shared_preprocess(&$vars) {
   $view   = $vars['view'];
   $fields = &$view->field;
 
@@ -227,5 +227,5 @@ function _google_appliance_onebox_body_shared_preprocess(&$vars) {
     }
   }
   // Allow custom modules to alter the row data before it is printed.
-  drupal_alter('google_appliance_onebox_content', $vars['themed_rows'], $vars);
+  drupal_alter('gsa_onebox_provider_content', $vars['themed_rows'], $vars);
 }
