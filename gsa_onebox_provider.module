@@ -5,8 +5,6 @@
  * Hooks in to the views API to add the gsa_onebox_provider type and theme.
  */
 
-// TODO README / project page describe substitutions
-
 /**
  * Implements hook_init().
  */
